@@ -1,4 +1,4 @@
-  app.controller('ctrl', function($scope, BusService){
+  app.controller('ctrl', function($scope, BusService, StopService, LocationService){
     $scope.busses = BusService.getBusses(
     function(response){
      $scope.noResults = response.numberofresults;
@@ -10,12 +10,12 @@
       $scope.errorStatusText = errorStatusText;
     }
     );
-    
-  });
 
-  app.controller('StopCtrl', function($scope, StopService){
-    
-    $scope.passId = function(stopId){
+
+
+
+
+       $scope.passId = function(stopId){
       $scope.stopId = stopId;
      
       $scope.theStop = StopService.getStop($scope.stopId, 
@@ -36,15 +36,18 @@
            $scope.stopName = response;
       });
     }
- 
-  });
+    
 
-  app.controller('StopLocaion', function($scope, LocationService){
-    $scope.findLocation = function(address){
+
+
+
+
+      $scope.findLocation = function(address){
       console.log(address);
       $scope.address = address;
       $scope.theStopNo = LocationService.findLocation($scope.address, 
         function(response){
+          
           $scope.stop = response;
           $scope.stopResults = response.results;
           console.log($scope.stopResults);
@@ -54,5 +57,14 @@
       });
 
     }
+
+
+  // app.controller('StopCtrl', function($scope, StopService){
+    
+ 
+ 
+  // });
+
+  // app.controller('StopLocaion', function($scope, LocationService){
 
   });

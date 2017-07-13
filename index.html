@@ -11,7 +11,7 @@
   <script type="text/javascript" src="js/services.js"></script>
 </head>
 <body ng-app = 'app'>
-  <div ng-controller="StopCtrl">
+  <div  ng-controller="ctrl">
   <div class="container" >
       <h3>Find Location of Stop No</h3>
       <div class="row">
@@ -32,7 +32,7 @@
         <h3>Or</h3>
         <h3>Find Stop No by Location</h3>
 
-         <div class="row" ng-controller="StopLocaion">
+         <div class="row">
           <div class="col-md-6">
             <form class="form-inline">
               <input type="text" class="form-control" placeholder="Location" ng-model="location" >
@@ -55,7 +55,7 @@
                     <td>{{stop.stopid}}</td>
                     <td>{{stop.fullname}}</td>
                     <td><button class="btn-primary btn">Times</button></td>
-                    <table><tr><td>££{{stop.fullname}}££</td></tr></table>
+                   
                   </tr>
 
                  
@@ -73,7 +73,7 @@
    
        
     
-        <div class="row" ng-controller="ctrl">
+        <div class="row">
           <p></p>
           <p>No of Results: {{noResults}}</p>
           <p>Stop ID: {{stopId}}</p>
