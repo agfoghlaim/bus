@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="js/controllers.js"></script>
+  <script type="text/javascript" src="js/services.js"></script>
+</head>
+<body ng-app = 'app'>
+  <div ng-controller="StopCtrl">
+  <div class="container" >
+      <h3>Find Location of Stop No</h3>
+      <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+              <input type="text" class="form-control" placeholder="Stop No" ng-model="stopId" >
+              <button class="btn btn-large btn-primary" ng-click="passId(stopId)">Search</button>
+            </form>
+           
+               <p>{{stopName}}</p>
+               <p>{{shortName}}</p>
+               <p>{{loName}}</p>
+              
+            
+            </div>
+        </div>
+      
+        <h3>Or</h3>
+        <h3>Find Stop No by Location</h3>
+
+         <div class="row" ng-controller="StopLocaion">
+          <div class="col-md-6">
+            <form class="form-inline">
+              <input type="text" class="form-control" placeholder="Location" ng-model="location" >
+              <button class="btn btn-large btn-primary" ng-click="findLocation(location)">Search</button>
+            </form>
+              <p>Number of stops: {{stop.numberofresults}}</p>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th>Stop Number</th>
+                    <th>Full Name</th>
+                    <th>Get Busses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="stop in stopResults">
+
+                    <td>{{stop.fullname}}</td>
+                    <td>{{stop.stopid}}</td>
+                    <td>{{stop.fullname}}</td>
+                    <td><button class="btn-primary btn">Times</button></td>
+                    <table><tr><td>££{{stop.fullname}}££</td></tr></table>
+                  </tr>
+
+                 
+                </tbody>
+              </table>
+            <p ng-repeat="a in address"><span>{{a.displaystopid}}</span></p>
+            <p>{{shortName}}</p>
+            <p>{{loName}}</p>
+          </div>
+        </div>
+      </div>
+
+          
+      
+   
+       
+    
+        <div class="row" ng-controller="ctrl">
+          <p></p>
+          <p>No of Results: {{noResults}}</p>
+          <p>Stop ID: {{stopId}}</p>
+          <table>
+            <tr>
+              <th>Next Bus Due</th>
+              <th>Destination</th>
+              <th>Route</th>
+            </tr >
+            <tr ng-repeat="bus in busses" >
+              <td> {{bus.duetime}} </td>
+              <td>{{bus.destination}}</td>
+              <td>{{bus.route}}</td>
+            </tr>
+          </table>
+        </div><!-- end row -->
+  </div><!-- end container -->
+
+
+</body>
+</html>
