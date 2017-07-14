@@ -1,4 +1,4 @@
-var app = angular.module('app', []);
+var app = angular.module('app', ['firebase']);
   app.controller('ctrl', function($scope, PresidentService){
     $scope.presidents = PresidentService.getPresidents(
     function(presidents){

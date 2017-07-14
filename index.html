@@ -6,6 +6,20 @@
   <title>JS Bin</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+     <script src="js/firebase.js"></script>
+  <script src="js/angularfire.min.js"></script>
+ <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC8DzYdlL9QUSWMGD3C9veccwUeoJ__3m8",
+    authDomain: "busses-ed305.firebaseapp.com",
+    databaseURL: "https://busses-ed305.firebaseio.com",
+    projectId: "busses-ed305",
+    storageBucket: "busses-ed305.appspot.com",
+    messagingSenderId: "597902685352"
+  };
+  firebase.initializeApp(config);
+</script>
   <script type="text/javascript" src="js/app.js"></script>
   <script type="text/javascript" src="js/controllers.js"></script>
   <script type="text/javascript" src="js/services.js"></script>
@@ -15,15 +29,15 @@
   <div class="container" >
       <h3>Find Location of Stop No</h3>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <form class="form-inline">
               <input type="text" class="form-control" placeholder="Stop No" ng-model="stopId" >
               <button class="btn btn-large btn-primary" ng-click="passId(stopId)">Search</button>
             </form>
            
-               <p>{{stopName}}</p>
-               <p>{{shortName}}</p>
-               <p>{{loName}}</p>
+               <p>{{fullStopName}}</p>
+               <p>{{shortStopName}}</p>
+               <p>{{localStopName}}</p>
               
             
             </div>
@@ -33,7 +47,7 @@
         <h3>Find Stop No by Location</h3>
 
          <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <form class="form-inline">
               <input type="text" class="form-control" placeholder="Location" ng-model="location" >
               <button class="btn btn-large btn-primary" ng-click="findLocation(location)">Search</button>
@@ -50,15 +64,11 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="stop in stopResults">
-
                     <td>{{stop.fullname}}</td>
-                    <td>{{stop.stopid}}</td>
+                    <td ng-model="what">{{stop.stopid}}</td>
                     <td>{{stop.fullname}}</td>
-                    <td><button class="btn-primary btn">Times</button></td>
-                   
+                    <td><button ng-click="getInfo(stop.stopid)"  class="btn-primary btn">Times</button></td>
                   </tr>
-
-                 
                 </tbody>
               </table>
             <p ng-repeat="a in address"><span>{{a.displaystopid}}</span></p>
@@ -74,10 +84,11 @@
        
     
         <div class="row">
+          <div class="col-md-12">
           <p></p>
           <p>No of Results: {{noResults}}</p>
           <p>Stop ID: {{stopId}}</p>
-          <table>
+          <table class="table table-bordered">
             <tr>
               <th>Next Bus Due</th>
               <th>Destination</th>
@@ -89,7 +100,11 @@
               <td>{{bus.route}}</td>
             </tr>
           </table>
+          </div>
         </div><!-- end row -->
+        <div ng-controller="DataController">
+          test for datacontroller
+        </div>
   </div><!-- end container -->
 
 

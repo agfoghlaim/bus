@@ -1,8 +1,8 @@
  app.service('BusService', function($http){
-    this.getBusses = function(callBackOk, callBackNotOk){
+    this.getBusses = function(sid, callBackOk, callBackNotOk){
       //var searchUrl = 'https://api.myjson.com/bins/po22';
      // var searchUrl = 'https://data.gov.ie/api/3/action/package_list';
-      var searchUrl = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=523001&format=json';
+      var searchUrl = 'https://data.dublinked.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + sid;
       
       $http.get(searchUrl).then(funOk, funNotOk);
       

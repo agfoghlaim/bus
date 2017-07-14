@@ -1,0 +1,52 @@
+===============
+ALL BE STOPS
+https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?operator=BE&format=json
+returns stuff + results[5216]
+stopid
+displaystopid
+shortname
+shortnamelocalized
+fullname
+fullnamelocalized
+latitude
+longitude
+lastupdated
+operated[1]
+====================
+
+
+==========
+error response codes:
+0 success
+1 no results
+2 missing parameter
+3 invalid parameter
+4 scheduled downtime
+5 unexpected system error
+=================
+========================
+
+http://[rtpiserver]/realtimebusinformation?stopid=[]&routeid=[]&maxresults=[]&operator=[]&format=[]
+**stopid is required
+
+=======================
+
+===========================
+BY DATE
+http://[rtpiserver]/timetableinformation?
+===========================
+
+===========================
+ROUTE INFO 
+
+http://[rtpiserver]/routeinformation?routeid
+
+
+&operator=[] 
+&format=[]
+==================================
+ROUTE LIST
+http://[rtpiserver]/routelistinformation?operator=[]
+&format=[]
+=======================
+
