@@ -48,3 +48,19 @@
     }
   }
  });
+
+
+  app.service('GoogleService', function($http){
+  this.lookUpCoordinates= function(lat,longitude, good, bad){
+      var apiKey = 'AIzaSyCh7uFwmTh3dl8j3kmjT69SC3gshUJmbI0';
+      var googleUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat +','+ longitude+'&result_type=bus_station&key='+apiKey;
+      console.log("this is googleurl " + googleUrl);
+    $http.get(googleUrl).then(funOk, funNotOk);
+    function funOk(response){
+      good(response.data);
+    };
+    function funNotOk(response){
+      bad(response.errormessage);
+    }
+  }
+ });

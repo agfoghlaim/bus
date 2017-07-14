@@ -1,3 +1,4 @@
+   //maps api key:  AIzaSyCh7uFwmTh3dl8j3kmjT69SC3gshUJmbI0 
   app.controller('ctrl', function($scope, BusService, StopService, LocationService){
        $scope.getInfo = function(stopId){
               $scope.sid = stopId;
@@ -61,35 +62,83 @@
       }, function(response){
           console.log("ghjk");
       });
-
     }
+});
+
+    app.controller('DataController', function($scope,  $firebaseArray, $http, GoogleService){
 
 
-  // app.controller('StopCtrl', function($scope, StopService){
-    
- 
- 
-  // });
+    // $scope.bus.$add({
+    //     name : 'moh',
+    //     address: 'here'
+    // }).then(function(ref){
+    //   console.log("contact id is "+ ref);
+    // });
 
-  // app.controller('StopLocaion', function($scope, LocationService){
+    //1 get (1)busstop latitude and longitude
+    //2reverse lookup on google
+    //3save stopid, lat, long and location details to firebase
+    //done 4 save stop name and other stuff
+ $scope.testBusId = function(testBus){
+      var stopId = testBus;
+      //var testBusId = '520801'; //callaghan's cross
+      var url = 'https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?stopid=' + stopId;
+     
+      var county , exactLocation;
+      $http.get(url).then(
+        function(response){
+          console.log("success "+ response.data.results[0].latitude);
+          console.log("success "+ response.data.results[0].longitude);
+          $scope.latitude = response.data.results[0].latitude;
+          $scope.longitude = response.data.results[0].longitude;
+            $scope.theLocation = GoogleService.lookUpCoordinates($scope.latitude, $scope.longitude,
+              function(response){
+                console.log(response.results);
+                 console.log(response.results[0].formatted_address);
+                 exactLocation = response.results[0].formatted_address;
+                 county = response.results[0].address_components[3].long_name;
+                 console.log(county);
 
-  });
 
-    app.controller('DataController', function($scope,  $firebaseArray){
-   
-    var ref = firebase.database().ref();
-    $scope.bus = $firebaseArray(ref);
-    console.log($firebaseArray);
 
-    $scope.bus.$add({
-        name : 'moh',
-        address: 'here'
-        
-      }).then(function(ref){
-        //var id = ref.key();
-        console.log("contact id is "+ ref);
-        
+                               var ref = firebase.database().ref();
+                              $scope.bus = $firebaseArray(ref);
+                              console.log($firebaseArray);
+
+                               $scope.bus.$add({
+                                  stopid:stopId,
+                                  latitude:$scope.latitude,
+                                  longitude:$scope.longitude,
+                                  county: county
+
+                                }).then(function(ref){
+                                    console.log(ref);
+                                    console.log("added...");
+                                });
+
+
+
+
+
+
+
+              }, 
+              function(response){
+                console.log("error from google "+ response);
+
+            } );
+        }, 
+        function(response){
+         console.log("error "+ response);
       });
+
+    
+
+     
+
+
+ }
+     
 
 
 
