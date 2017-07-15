@@ -51,9 +51,9 @@
 
 
   app.service('GoogleService', function($http){
-  this.lookUpCoordinates= function(lat,longitude, good, bad){
+  this.lookUpCoordinates= function(latitude,longitude, good, bad){
       var apiKey = 'AIzaSyCh7uFwmTh3dl8j3kmjT69SC3gshUJmbI0';
-      var googleUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat +','+ longitude+'&result_type=bus_station&key='+apiKey;
+      var googleUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude +','+ longitude+'&result_type=bus_station&key='+apiKey;
       console.log("this is googleurl " + googleUrl);
     $http.get(googleUrl).then(funOk, funNotOk);
     function funOk(response){
@@ -64,3 +64,40 @@
     }
   }
  });
+
+  app.service('FirebaseService', function($http, $firebaseArray){
+
+    this.addToFirebase = function(details, good, bad){
+      //make requests
+
+
+             var ref = firebase.database().ref();
+                              var bus = $firebaseArray(ref);
+                              console.log($firebaseArray);
+
+                               bus.$add(details).then(
+                                function(ref){
+                                   
+                                    console.log("added...");
+                                });
+    }
+  });
+
+  app.service('CoordinatesService', function($http){
+    this.getCoordinates = function(para, good, bad){
+       var url = 'https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?stopid=' + para;
+      $http.get(url).then(funOk, funNotOk);
+      function funOk(response){
+        good( response);
+      };
+      function funNotOk(response){
+        bad(response);
+
+      }
+
+    }
+  });
+
+
+
+

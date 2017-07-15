@@ -65,81 +65,68 @@
     }
 });
 
-    app.controller('DataController', function($scope,  $firebaseArray, $http, GoogleService){
+    app.controller('DataController', function($scope, GoogleService, FirebaseService, CoordinatesService){
 
 
-    // $scope.bus.$add({
-    //     name : 'moh',
-    //     address: 'here'
-    // }).then(function(ref){
-    //   console.log("contact id is "+ ref);
-    // });
 
     //1 get (1)busstop latitude and longitude
     //2reverse lookup on google
     //3save stopid, lat, long and location details to firebase
     //done 4 save stop name and other stuff
- $scope.testBusId = function(testBus){
+$scope.testBusId = function(testBus){
       var stopId = testBus;
-      //var testBusId = '520801'; //callaghan's cross
-      var url = 'https://data.dublinked.ie/cgi-bin/rtpi/busstopinformation?stopid=' + stopId;
-     
-      var county , exactLocation;
-      $http.get(url).then(
-        function(response){
-          console.log("success "+ response.data.results[0].latitude);
-          console.log("success "+ response.data.results[0].longitude);
-          $scope.latitude = response.data.results[0].latitude;
-          $scope.longitude = response.data.results[0].longitude;
-            $scope.theLocation = GoogleService.lookUpCoordinates($scope.latitude, $scope.longitude,
-              function(response){
+      CoordinatesService.getCoordinates(stopId, goodFun, badFun);
+        function goodFun(response){
+            console.log("success "+ response.data.results[0].latitude);
+            console.log("success "+ response.data.results[0].longitude);
+              var latitude = response.data.results[0].latitude;
+              var longitude = response.data.results[0].longitude;
+              GoogleService.lookUpCoordinates(latitude,longitude, googleSuccess, googleFail);
+              function googleSuccess(response){
                 console.log(response.results);
-                 console.log(response.results[0].formatted_address);
-                 exactLocation = response.results[0].formatted_address;
-                 county = response.results[0].address_components[3].long_name;
-                 console.log(county);
+                console.log(response.results[0].formatted_address);
+                exactLocation = response.results[0].formatted_address;
+                county = response.results[0].address_components[3].long_name;
+                console.log(county);
+                var detailsToSave = {
+                  stopid: stopId,
+                  latitude:latitude,
+                  longitude:  longitude,
+                  county:response.results[0].address_components[3].long_name,
+                  fulladdress:response.results[0].formatted_address
+                }
+                FirebaseService.addToFirebase(detailsToSave);
 
+              };
+              function googleFail(response){
+                console.log("error "+ response);
 
+              }
+       
+            
 
-                               var ref = firebase.database().ref();
-                              $scope.bus = $firebaseArray(ref);
-                              console.log($firebaseArray);
-
-                               $scope.bus.$add({
-                                  stopid:stopId,
-                                  latitude:$scope.latitude,
-                                  longitude:$scope.longitude,
-                                  county: county
-
-                                }).then(function(ref){
-                                    console.log(ref);
-                                    console.log("added...");
-                                });
-
-
-
-
-
-
-
-              }, 
-              function(response){
-                console.log("error from google "+ response);
-
-            } );
-        }, 
-        function(response){
-         console.log("error "+ response);
-      });
-
-    
-
-     
-
-
- }
+        };
+        function badFun(response){
+            console.log("error "+ response);
+        }
+  }//end testBusIf
      
 
 
 
-  });
+});//end controller
+
+
+
+
+            
+              
+
+
+
+                            
+
+
+
+              
+       
