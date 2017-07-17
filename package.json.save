@@ -1,0 +1,21 @@
+{
+  "name": "bus",
+  "version": "1.0.0",
+  "description": "bus app	",
+  "main": "/js/app.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agfoghlaim/bus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agfoghlaim/bus/issues"
+  },
+  "homepage": "https://github.com/agfoghlaim/bus#readme"
+}

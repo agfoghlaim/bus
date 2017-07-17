@@ -1,0 +1,28 @@
+{
+  "name": "bus",
+  "version": "1.0.0",
+  "description": "bus app",
+  "main": "/js/app.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "4.13.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agfoghlaim/bus.git"
+  },
+  "author": "moh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agfoghlaim/bus/issues"
+  },
+  "homepage": "https://github.com/agfoghlaim/bus#readme",
+  "keywords": [
+    "none"
+  ]
+}
